@@ -1,0 +1,9 @@
+const mongoose = require('mongoose');
+
+const contactSchema = new mongoose.Schema({
+     location: String, // Change the field name to lowercase
+})
+
+const Weather = mongoose.model('weather', contactSchema);
+
+module.exports = { Weather };
