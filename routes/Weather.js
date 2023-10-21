@@ -1,8 +1,10 @@
 const express = require('express')
 
-const {Weather} = require('../models/Weather')
+const {Weather, ValidateWeather} = require('../models/Weather')
 
 const router = express.Router();
+  //let result = ValidateWeather(req.body)
+
 
 //Post
 router.post('/', async (req, res) => {
@@ -30,7 +32,30 @@ res.status(500).send('db_error ' + error)
 
 });
 
-//Get
+router.get('/:id', async (req, res) => {
+  const {location} = req.query;
+
+  let filter = {}
+
+  if (location)
+  {
+    filter.location = location
+  }
+
+  try {
+    const weather = await Weather
+      .find(filter)
+    res.json(weather);
+  }
+  catch (error) {
+    res.status(500).json('db error ' + error)
+  }
+
+})
+
+
+/*
+//Get that works 
 router.get('/:id', async (req, res) => {
 
       try {
@@ -41,7 +66,8 @@ router.get('/:id', async (req, res) => {
         res.status(500).json('db error ' + error)
       }
     })
-    
+    */
+
     //Delete
     router.delete('/:id', async (req, res) => {
         try {
@@ -87,4 +113,8 @@ router.get('/:id', async (req, res) => {
         }
       });
 
+      
+
+
+    
 module.exports = router

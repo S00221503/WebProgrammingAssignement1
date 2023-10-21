@@ -1,0 +1,20 @@
+@port = 3000
+
+###
+### POST Request for a contact 
+## Expected result is ........
+# @name postWeather
+
+POST http://localhost:{{port}}/api/v1/weather HTTP/1.1
+content-type: application/json
+
+{ "location" : "England",
+    "weather" : "Rain",
+    "chance of Rain" : true,
+    "Temperature": 1001}
+
+
+###
+@newObjectID = {{postWeather.response.headers.location}}
+
+GET http://localhost:{{port}}/api/v1/weather/{{newObjectID}}

@@ -1,10 +1,37 @@
 const mongoose = require('mongoose');
+const Joi = require('joi'); // Make sure to require Joi
 
-const contactSchema = new mongoose.Schema({
-     location: String, // Change the field name to lowercase
-     weather: String
-})
+// Define your weather schema using Mongoose
+const weatherSchema = new mongoose.Schema({
+  location: {
+    type: String,
+    required: true,
+    minlength: 3,
+  },
+  weather: String,
+  chanceRain: Boolean,
+  temperature: {
+    type: Number,
+    integer: true,
+    min: 100,
+  },
+});
 
-const Weather = mongoose.model('weather', contactSchema);
+// Create the Weather model using the schema
+const Weather = mongoose.model('weather', weatherSchema);
 
-module.exports = { Weather };
+// Define the validation function (with an uppercase "V")
+function ValidateWeather(weather) {
+  const weatherJoiSchema = Joi.object({
+    location: Joi.string().min(3).required(),
+    weather: Joi.string(),
+    chanceRain: Joi.boolean(),
+    temperature: Joi.number().integer().min(100),
+  });
+
+  return weatherJoiSchema.validate(weather);
+}
+
+module.exports = { Weather, ValidateWeather };
+
+
