@@ -31,7 +31,7 @@ res.status(500).send('db_error ' + error)
 });
 
 //Get
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
 
       try {
         const weather = await Weather.find()
@@ -42,5 +42,49 @@ router.get('/', async (req, res) => {
       }
     })
     
+    //Delete
+    router.delete('/:id', async (req, res) => {
+        try {
+          const id = req.params.id;
+      
+          // Perform the deletion operation in your database
+          const deletedWeather = await Weather.findByIdAndDelete(id);
+      
+          if (!deletedWeather) {
+            // If the Weather with the provided ID doesn't exist, return a 404 status
+            return res.status(404).json({ error: 'Weather not found' });
+          }
+      
+          // Respond with a success message
+          res.status(204).json({ message: 'Resource deleted successfully' });
+        } catch (error) {
+          // Handle errors, e.g., if there's a database error
+          console.error(error);
+          res.status(500).json({ error: 'An error occurred while deleting the resource' });
+        }
+      });
+
+      //Put
+      router.put('/:id', async (req, res) => {
+        try {
+          const id = req.params.id;
+          const updateData = req.body; // Assuming the updated data is sent in the request body
+      
+          // Perform the update operation in your database
+          const updatedWeather = await Weather.findByIdAndUpdate(id, updateData, { new: true });
+      
+          if (!updatedWeather) {
+            // If the Weather with the provided ID doesn't exist, return a 404 status
+            return res.status(404).json({ error: 'Weather not found' });
+          }
+      
+          // Respond with the updated Weather data
+          res.status(200).json(updatedWeather);
+        } catch (error) {
+          // Handle errors, e.g., if there's a database error or validation error
+          console.error(error);
+          res.status(500).json({ error: 'An error occurred while updating the resource' });
+        }
+      });
 
 module.exports = router

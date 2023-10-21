@@ -8,9 +8,23 @@
 POST http://localhost:{{port}}/api/v1/weather HTTP/1.1
 content-type: application/json
 
-{ "Location" : "Ireland"}
+{ "location" : "Ireland",
+    "weather" : "Rain"}
 
 ###
- @newObjectID = {{postWeather.response.headers.Location}}
+ @newObjectID = {{postWeather.response.headers.location}}
 
- GET http://localhost:{{port}}/api/v1/weather/{{newObjectID}} HTTP/1.1
+GET http://localhost:{{port}}/api/v1/weather/{{newObjectID}}
+
+###
+
+DELETE http://localhost:{{port}}/api/v1/weather/{{newObjectID}}
+
+###
+
+PUT http://localhost:{{port}}/api/v1/weather/{{newObjectID}} HTTP/1.1
+content-type: application/json
+
+{ "location" : "England"
+}
+
