@@ -13,6 +13,16 @@ content-type: application/json
     "chance of Rain" : true,
     "Temperature": 1001}
 
+###
+//Post that fails
+
+POST http://localhost:{{port}}/api/v1/weather HTTP/1.1
+content-type: application/json
+
+{ "location" : "Sc",
+    "weather" : "Rain",
+    "chance of Rain" : true,
+    "Temperature": 1001}
 
 ###
 @newObjectID = {{postWeather.response.headers.location}}

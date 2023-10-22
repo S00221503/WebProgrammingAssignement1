@@ -5,7 +5,6 @@ const {Weather, ValidateWeather} = require('../models/Weather')
 const router = express.Router();
   //let result = ValidateWeather(req.body)
 
-
 //Post
 router.post('/', async (req, res) => {
 
@@ -47,7 +46,7 @@ router.get('/', async (req, res) => {
       return res.status(500).json('db error ' + error);
     }
   } else {
-    // If no "id" is provided, filter by "name" and "location" as before
+   
     let filter = {};
 
     if (weather) {
