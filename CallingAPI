@@ -1,0 +1,23 @@
+/*
+
+fetch(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`)
+  .then(response => response.json())
+  .then(data => {
+    const weatherData = new WeatherData({
+      location: data.location.name,
+      temperature: data.current.temp_c,
+      humidity: data.current.humidity,
+    });
+
+    weatherData.save((err) => {
+      if (err) {
+        console.error('Error saving weather data:', err);
+      } else {
+        console.log('Weather data saved to MongoDB');
+      }
+    });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  */

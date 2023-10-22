@@ -35,3 +35,8 @@ content-type: application/json
 { "location" : "England",
 "chanceRain" : "pink"
 }
+
+###
+//Delete which fails
+
+DELETE http://localhost:{{port}}/api/v1/weather?id=653429e0deecaedf80d85c41
