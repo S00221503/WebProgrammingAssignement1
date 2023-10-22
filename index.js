@@ -2,8 +2,6 @@ const express = require('express')
 
 require('dotenv').config();
 require('./database');
-// note this required a .env file which is not in github
-
 
 const {Weather} = require('./models/Weather')
 
@@ -13,7 +11,7 @@ const weather = require('./routes/Weather')
 const app = express()
 const port = process.env.PORT || 3001
 
-
+/*
 //Calling API
 app.get('/weather', (req, res) => {
     WeatherData.find({}, (err, data) => {
@@ -25,6 +23,7 @@ app.get('/weather', (req, res) => {
     });
   });
   //End of calling API
+*/
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
