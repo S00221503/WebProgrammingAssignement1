@@ -8,7 +8,7 @@
 POST http://localhost:{{port}}/api/v1/weather HTTP/1.1
 content-type: application/json
 
-{ "location" : "England",
+{ "location" : "Scotland",
     "weather" : "Rain",
     "chance of Rain" : true,
     "Temperature": 1001}
@@ -17,4 +17,21 @@ content-type: application/json
 ###
 @newObjectID = {{postWeather.response.headers.location}}
 
-GET http://localhost:{{port}}/api/v1/weather/{{newObjectID}}
+GET http://localhost:{{port}}/api/v1/weather?location=England
+
+###
+GET http://localhost:{{port}}/api/v1/weather?id=65341604be12c2f24f20657e
+
+###
+//invalid id
+GET http://localhost:{{port}}/api/v1/weather?id=65340604be12c2f24f20657e
+
+###
+
+//Put fail, invalid data
+PUT http://localhost:{{port}}/api/v1/weather/{{newObjectID}} HTTP/1.1
+content-type: application/json
+
+{ "location" : "England",
+"chanceRain" : "pink"
+}

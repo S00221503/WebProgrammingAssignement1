@@ -22,6 +22,7 @@ DELETE http://localhost:{{port}}/api/v1/weather/{{newObjectID}}
 
 ###
 
+//test cannot find resource, delte newObjectID before send Request
 PUT http://localhost:{{port}}/api/v1/weather/{{newObjectID}} HTTP/1.1
 content-type: application/json
 

@@ -32,26 +32,64 @@ res.status(500).send('db_error ' + error)
 
 });
 
-router.get('/:id', async (req, res) => {
-  const {location} = req.query;
+router.get('/', async (req, res) => {
+  const { location, weather, id } = req.query; // Include "id" in query parameters
 
-  let filter = {}
+  if (id) {
+    // If an "id" parameter is provided, attempt to retrieve an individual resource by its ID
+    try {
+      const individualWeather = await Weather.findById(id);
+      if (!individualWeather) {
+        return res.status(404).json('Weather not found');
+      }
+      return res.json(individualWeather);
+    } catch (error) {
+      return res.status(500).json('db error ' + error);
+    }
+  } else {
+    // If no "id" is provided, filter by "name" and "location" as before
+    let filter = {};
 
-  if (location)
-  {
-    filter.location = location
-  }
+    if (weather) {
+      filter.weather = weather;
+    }
 
-  try {
-    const weather = await Weather
-      .find(filter)
-    res.json(weather);
-  }
-  catch (error) {
-    res.status(500).json('db error ' + error)
-  }
+    if (location) {
+      filter.location = location;
+    }
 
-})
+    try {
+      const weather = await Weather.find(filter);
+      res.json(weather);
+    } catch (error) {
+      res.status(500).json('db error ' + error);
+    }
+  }
+});
+
+/*
+router.get('/', async (req, res) => {
+
+  const { name, location } = req.query;
+
+  let filter = {};
+
+  if (name) {
+    filter.name = name;
+  }
+
+  if (location) { 
+    filter.location = location;
+  }
+
+  try {
+    const weather = await Weather.find(filter);
+    res.json(weather);
+  } catch (error) {
+    res.status(500).json('db error ' + error);
+  }
+});
+*/
 
 
 /*
