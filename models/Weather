@@ -9,12 +9,7 @@ const weatherSchema = new mongoose.Schema({
     minlength: 3,
   },
   weather: String,
-  chanceRain: Boolean,
-  temperature: {
-    type: Number,
-    integer: true,
-    min: 100,
-  },
+  temperature : Number
 });
 
 // Create the Weather model using the schema
@@ -25,32 +20,11 @@ function ValidateWeather(weather) {
   const weatherJoiSchema = Joi.object({
     location: Joi.string().min(3).required(),
     weather: Joi.string(),
-    chanceRain: Joi.boolean(),
     temperature: Joi.number().integer().min(100),
   });
 
   return weatherJoiSchema.validate(weather);
 }
-
-/*
-mongoose
-  .connect(connectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch((error) => {
-    console.log(`Database connection refused ${error}`);
-    process.exit(2);
-  });
-
-const db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-
-db.once('open', () => {
-  console.log('DB connected ' + connectionString);
-});
-*/
 
 module.exports = { Weather, ValidateWeather };
 

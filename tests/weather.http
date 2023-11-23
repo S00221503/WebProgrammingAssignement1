@@ -9,7 +9,7 @@ POST http://localhost:{{port}}/api/v1/weather HTTP/1.1
 content-type: application/json
 
 { "location" : "Ireland",
-    "weather" : "Rain"}
+    "weather" : "Dry"}
 
 ###
  @newObjectID = {{postWeather.response.headers.location}}
