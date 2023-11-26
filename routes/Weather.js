@@ -32,7 +32,7 @@ res.status(500).send('db_error ' + error)
 });
 
 router.get('/', async (req, res) => {
-  const { location, weather, id } = req.query; // Include "id" in query parameters
+  const { location, weather, temperature, id } = req.query; // Include "id" in query parameters
 
   if (id) {
     // If an "id" parameter is provided, attempt to retrieve an individual resource by its ID
@@ -55,6 +55,10 @@ router.get('/', async (req, res) => {
 
     if (location) {
       filter.location = location;
+    }
+
+    if (temperature) {
+      filter.temperature = temperature;
     }
 
     try {
@@ -91,19 +95,28 @@ router.get('/', async (req, res) => {
 */
 
 
-/*
+
 //Get that works 
 router.get('/:id', async (req, res) => {
 
-      try {
-        const weather = await Weather.find()
-        res.json(weather);
-      }
-      catch (error) {
-        res.status(500).json('db error ' + error)
-      }
-    })
-    */
+  let id = req.params.id;
+
+  try {
+    const weather = await Weather.findById(id)
+
+    if (weather) {
+      res.json(weather)
+    }
+    else {
+      res.status('404').json('not found');
+    }
+  }
+  // Handle errors, e.g., if there's an error with id
+  catch (error) {
+    res.status(404).json('id is incorrect' + error)
+  }
+})
+    
 
     //Delete
     router.delete('/:id', async (req, res) => {
